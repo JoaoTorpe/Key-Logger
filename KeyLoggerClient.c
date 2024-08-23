@@ -6,8 +6,8 @@
 
 int main() {
     short keyState;
-    char buffer[BUFFER_SIZE];
-     size_t len = strlen(buffer);
+    char buffer[BUFFER_SIZE] = {0};
+     size_t len = 0;
 
     while (1) {
         // Loop através das teclas
@@ -16,6 +16,16 @@ int main() {
 
             // Verifica se a tecla foi pressionada
             if (keyState & 0x0001) {
+                if(len < BUFFER_SIZE -1){
+
+                 if (key == VK_ESCAPE) {
+                    for (size_t i = 0; i < len; i++) {
+                 printf("%c", buffer[i]);
+                     printf("\n");
+                        }
+                        printf("Len: %d",len);
+                    return 0;
+                }
                 
 
                 if (key >= 'A' && key <= 'Z') {
@@ -28,24 +38,25 @@ int main() {
                 else {
                     switch (key) {
                         case VK_SPACE:
-                            buffer[len++] = MapVirtualKey(key, MAPVK_VK_TO_CHAR);
+                            buffer[len++] = ' ';
                             buffer[len] = '\0';
                             break;
                         case VK_RETURN:
-                            buffer[len++] = MapVirtualKey(key, MAPVK_VK_TO_CHAR);
+                            buffer[len++] ='\n';
                             buffer[len] = '\0';
                             break;
                         case VK_TAB:
-                            buffer[len++] = MapVirtualKey(key, MAPVK_VK_TO_CHAR);
+                            buffer[len++] = '\t';
                             buffer[len] = '\0';
                             break;
                         default:
-                            buffer[len++] = MapVirtualKey(key, MAPVK_VK_TO_CHAR);
-                            buffer[len] = '\0';
+                         buffer[len++] = MapVirtualKey(key, MAPVK_VK_TO_CHAR);
+                         buffer[len] = '\0';
+                           break;
                     }
                 }
 
-               
+                }
             }
         }
 
