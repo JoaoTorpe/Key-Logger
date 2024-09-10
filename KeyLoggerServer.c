@@ -46,7 +46,7 @@ if (n < 0) {
     printf("Nenhum dado recebido.\n");
 } else {
 
-    printf("Teclas: \n");
+    printf("Log das teclas: \n");
 	printf("len: %d",strlen(buffer));	
 for(int i = 0;i < strlen(buffer);i++){
 
